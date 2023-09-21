@@ -24,6 +24,8 @@
 #include "dhcpserver/dhcpserver.h"
 #endif
 
+#include "hal.h"
+
 #define EXAMPLE_ESP_WIFI_SSID      CONFIG_ESP_WIFI_SSID
 #define EXAMPLE_ESP_WIFI_PASS      CONFIG_ESP_WIFI_PASSWORD
 #define EXAMPLE_ESP_WIFI_CHANNEL   CONFIG_ESP_WIFI_CHANNEL
@@ -161,6 +163,13 @@ void start_network(void)
 
 void app_main(void)
 {
+    hal_init();
+    hal_write(GSM_PWR_ON);
+    vTaskDelay(pdMS_TO_TICKS(1000));
+    hal_write(GSM_PWR_ON | GSM_PWR_KEY);
+    vTaskDelay(pdMS_TO_TICKS(1000));
+    hal_write(GSM_PWR_ON);
+    vTaskDelay(pdMS_TO_TICKS(1000));
     // Initialize NVS
     esp_err_t ret = nvs_flash_init();
     if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
