@@ -21,6 +21,11 @@ esp_err_t modem_init_network(esp_netif_t *netif)
     // setup the DCE
     esp_modem_dte_config_t dte_config = ESP_MODEM_DTE_DEFAULT_CONFIG();
     esp_modem_dce_config_t dce_config = ESP_MODEM_DCE_DEFAULT_CONFIG(CONFIG_EXAMPLE_MODEM_PPP_APN);
+    dte_config.uart_config.cts_io_num = -1;
+    dte_config.uart_config.rts_io_num = -1;
+    dte_config.uart_config.rx_io_num = 18;
+    dte_config.uart_config.tx_io_num = 17;
+
     dce = esp_modem_new(&dte_config, &dce_config, netif);
     if (!dce) {
         return ESP_FAIL;
