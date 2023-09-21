@@ -19,8 +19,8 @@ extern "C" {
 #define GSM_PWR_KEY       (1<<7)
 #define GSM_PWR_ON        (1<<14)
 
-void hal_init();
-void hal_write(uint32_t val);
+void board_init();
+void board_write(uint32_t val);
 
 #ifdef __cplusplus
 }

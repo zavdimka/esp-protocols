@@ -1,15 +1,15 @@
-#include "hal.h"
+#include "board.h"
 
 
-void hal_init(){
-    // gpio_config_t cfg = {
-    //     .intr_type = GPIO_INTR_DISABLE,
-    //     .mode = GPIO_MODE_OUTPUT,
-    //     .pin_bit_mask = (1ULL << OUTPUTS_SHIFT_DOUT) | (1ULL << OUTPUTS_SHIFT_CLK) | (1ULL << OUTPUTS_SHIFT_LD) | (1ULL << SENSORS_ON),
-    //     .pull_down_en = GPIO_PULLDOWN_DISABLE,
-    //     .pull_up_en = GPIO_PULLUP_DISABLE
-    // };
-    // gpio_config(&cfg);
+void board_init(){
+    gpio_config_t cfg = {
+        .intr_type = GPIO_INTR_DISABLE,
+        .mode = GPIO_MODE_OUTPUT,
+        .pin_bit_mask = (1ULL << OUTPUTS_SHIFT_DOUT) | (1ULL << OUTPUTS_SHIFT_CLK) | (1ULL << OUTPUTS_SHIFT_LD) | (1ULL << SENSORS_ON),
+        .pull_down_en = GPIO_PULLDOWN_DISABLE,
+        .pull_up_en = GPIO_PULLUP_DISABLE
+    };
+    gpio_config(&cfg);
     gpio_set_level(SENSORS_ON, 1);
     gpio_set_level(OUTPUTS_SHIFT_DOUT, 0);
     gpio_set_level(OUTPUTS_SHIFT_CLK, 0);
@@ -17,7 +17,7 @@ void hal_init(){
     vTaskDelay(pdMS_TO_TICKS(10));
 }
 
-void hal_write(uint32_t val){
+void board_write(uint32_t val){
     for(int32_t i=0;i<32;i++){
     if (val & 0x80000000)
         gpio_set_level(OUTPUTS_SHIFT_DOUT, 1); // Data -> 1

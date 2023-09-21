@@ -5,7 +5,7 @@ else()
 endif()
 
 idf_component_register(SRCS "ap_to_pppos.c" 
-                            ${NETWORK_DCE} "hal.c"
+                            ${NETWORK_DCE} "board.c"
                     INCLUDE_DIRS "."
                    )
 
