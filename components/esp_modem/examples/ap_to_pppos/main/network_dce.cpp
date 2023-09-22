@@ -166,6 +166,10 @@ extern "C" esp_err_t modem_init_network(esp_netif_t *netif)
     esp_modem_dte_config_t dte_config = ESP_MODEM_DTE_DEFAULT_CONFIG();
     dte_config.uart_config.rx_buffer_size = 16384;
     dte_config.uart_config.tx_buffer_size = 2048;
+    dte_config.uart_config.cts_io_num = -1;
+    dte_config.uart_config.rts_io_num = -1;
+    dte_config.uart_config.rx_io_num = 18;
+    dte_config.uart_config.tx_io_num = 17;
     esp_modem_dce_config dce_config = ESP_MODEM_DCE_DEFAULT_CONFIG(CONFIG_EXAMPLE_MODEM_PPP_APN);
 
     // create DTE and minimal network DCE
