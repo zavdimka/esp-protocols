@@ -165,11 +165,11 @@ void app_main(void)
 {
     board_init();
     board_write(0);
-    vTaskDelay(pdMS_TO_TICKS(1000));
+    vTaskDelay(pdMS_TO_TICKS(2000));
     //board_write(GSM_PWR_ON | GSM_PWR_KEY);
     //vTaskDelay(pdMS_TO_TICKS(1000));
     board_write(GSM_PWR_ON);
-    vTaskDelay(pdMS_TO_TICKS(1000));
+    vTaskDelay(pdMS_TO_TICKS(2000));
     // Initialize NVS
     esp_err_t ret = nvs_flash_init();
     if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {

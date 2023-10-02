@@ -11,7 +11,9 @@
 #include <string.h>
 #include "esp_netif.h"
 #include "esp_modem_api.h"
+#include "esp_log.h"
 
+static const char *TAG = "network_dce";
 
 static esp_modem_dce_t *dce = NULL;
 
@@ -26,7 +28,7 @@ esp_err_t modem_init_network(esp_netif_t *netif)
     dte_config.uart_config.rx_io_num = 18;
     dte_config.uart_config.tx_io_num = 17;
 
-    dce = esp_modem_new_dev(ESP_MODEM_DCE_SIM7000, &dte_config, &dce_config, netif);
+    dce = esp_modem_new_dev(ESP_MODEM_DCE_GENETIC, &dte_config, &dce_config, netif);
     if (!dce) {
         return ESP_FAIL;
     }
@@ -43,7 +45,10 @@ esp_err_t modem_init_network(esp_netif_t *netif)
     }
 #endif // CONFIG_EXAMPLE_NEED_SIM_PIN
 
-    //esp_modem_at()
+    char resp[100];
+    esp_modem_at(dce, "AT\r", resp, 1000);
+    ESP_LOGI(TAG, "AT is %s", resp);
+
 
     return ESP_OK;
 }
