@@ -164,10 +164,10 @@ void start_network(void)
 void app_main(void)
 {
     board_init();
-    board_write(GSM_PWR_ON);
+    board_write(0);
     vTaskDelay(pdMS_TO_TICKS(1000));
-    board_write(GSM_PWR_ON | GSM_PWR_KEY);
-    vTaskDelay(pdMS_TO_TICKS(1000));
+    //board_write(GSM_PWR_ON | GSM_PWR_KEY);
+    //vTaskDelay(pdMS_TO_TICKS(1000));
     board_write(GSM_PWR_ON);
     vTaskDelay(pdMS_TO_TICKS(1000));
     // Initialize NVS
