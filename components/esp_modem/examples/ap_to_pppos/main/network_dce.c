@@ -65,6 +65,8 @@ bool modem_start_network()
 {
     char resp[100];
     int act = 0;
+    esp_modem_read_pin(dce, (bool*)&act);
+    ESP_LOGI(TAG, "Pin %i", act);
     esp_modem_get_module_name(dce, resp);
     ESP_LOGI(TAG,"Module name %s", resp);
     esp_modem_get_operator_name(dce, resp, &act);
