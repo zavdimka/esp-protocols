@@ -13,6 +13,8 @@
 #include "esp_event.h"
 #include "esp_log.h"
 #include "esp_idf_version.h"
+#include "esp_netif.h"
+#include "esp_netif_ppp.h"
 #include "nvs_flash.h"
 #include "lwip/netif.h"
 #include "lwip/lwip_napt.h"
@@ -68,6 +70,17 @@ static void on_ip_event(void *arg, esp_event_base_t event_base,
         ip_event_got_ip6_t *event = (ip_event_got_ip6_t *)event_data;
         ESP_LOGI(TAG, "Got IPv6 address " IPV6STR, IPV62STR(event->ip6_info.ip));
     }
+}
+
+static void on_ppp_changed(void *arg, esp_event_base_t event_base,
+                           int32_t event_id, void *event_data)
+{
+    ESP_LOGI(TAG, "PPP state changed event %d", event_id);
+    // if (event_id == NETIF_PPP_ERRORUSER) {
+    //     /* User interrupted event from esp-netif */
+    //     esp_netif_t *netif = event_data;
+    //     ESP_LOGI(TAG, "User interrupted event from netif:%p", netif);
+    // }
 }
 
 static esp_err_t set_dhcps_dns(esp_netif_t *netif, uint32_t addr)
@@ -154,7 +167,7 @@ void start_network(void)
             continue;
         }
         ESP_LOGI(TAG, "modem_start_network");
-        bits = xEventGroupWaitBits(event_group, (DISCONNECT_BIT | CONNECT_BIT), pdTRUE, pdFALSE, pdMS_TO_TICKS(30000));
+        bits = xEventGroupWaitBits(event_group, (DISCONNECT_BIT | CONNECT_BIT), pdTRUE, pdFALSE, pdMS_TO_TICKS(60000));
         ESP_LOGI(TAG, "xEventGroupWaitBits");
         if (bits & DISCONNECT_BIT) {
             ESP_LOGE(TAG, "Modem got disconnected ...retrying");
@@ -193,6 +206,8 @@ void app_main(void)
     // Initialize the PPP network and register for IP event
     ESP_ERROR_CHECK(modem_init_network(ppp_netif));
     ESP_ERROR_CHECK(esp_event_handler_register(IP_EVENT, ESP_EVENT_ANY_ID, on_ip_event, NULL));
+    ESP_ERROR_CHECK(esp_event_handler_register(NETIF_PPP_STATUS, ESP_EVENT_ANY_ID, &on_ppp_changed, NULL));
+
 
     // Start the PPP network and wait for connection
     start_network();

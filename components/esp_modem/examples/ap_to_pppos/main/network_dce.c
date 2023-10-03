@@ -63,6 +63,11 @@ void modem_deinit_network(void)
 
 bool modem_start_network()
 {
+    char resp[100];
+    esp_modem_at(dce, "AT+COPS?", resp, 1000);
+    esp_modem_at(dce, "AT+CREG?", resp, 1000);
+    esp_modem_at(dce, "AT+CGATT?", resp, 1000);
+    esp_modem_at(dce, "AT+CGACT?", resp, 1000);
     return esp_modem_set_mode(dce, ESP_MODEM_MODE_DATA) == ESP_OK;
 }
 
