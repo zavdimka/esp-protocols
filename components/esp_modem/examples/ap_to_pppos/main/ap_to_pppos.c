@@ -153,7 +153,9 @@ void start_network(void)
             vTaskDelay(pdMS_TO_TICKS(10000));
             continue;
         }
+        ESP_LOGI(TAG, "modem_start_network");
         bits = xEventGroupWaitBits(event_group, (DISCONNECT_BIT | CONNECT_BIT), pdTRUE, pdFALSE, pdMS_TO_TICKS(30000));
+        ESP_LOGI(TAG, "xEventGroupWaitBits");
         if (bits & DISCONNECT_BIT) {
             ESP_LOGE(TAG, "Modem got disconnected ...retrying");
             modem_stop_network();
