@@ -84,16 +84,16 @@ bool modem_start_network()
     ESP_LOGI(TAG,"Network status %i", act);
 
 
-    esp_modem_at(dce, "AT+CFUN=0", resp, 1000);
-    esp_modem_at(dce, "AT+CGDCONT=1,\"IP\",\"internet\"", resp, 1000);
-    esp_modem_at(dce, "AT+CFUN=1", resp, 1000);
-    esp_modem_at(dce, "AT+CGATT?", resp, 1000);
-   // esp_modem_at(dce, "AT+CGNAPN", resp, 1000);
-   // esp_modem_at(dce, "AT+CNCFG=0,1,\"internet\"", resp, 1000);
-   // esp_modem_at(dce, "AT+CNACT=0,1", resp, 1000);
-    esp_modem_at(dce, "AT+CREG?", resp, 1000);
-    esp_modem_at(dce, "AT+CGATT?", resp, 1000);
-    esp_modem_at(dce, "AT+CGACT?", resp, 1000);
+//     esp_modem_at(dce, "AT+CFUN=0", resp, 1000);
+//     esp_modem_at(dce, "AT+CGDCONT=1,\"IP\",\"internet\"", resp, 1000);
+//     esp_modem_at(dce, "AT+CFUN=1", resp, 1000);
+//     esp_modem_at(dce, "AT+CGATT?", resp, 1000);
+//    // esp_modem_at(dce, "AT+CGNAPN", resp, 1000);
+//    // esp_modem_at(dce, "AT+CNCFG=0,1,\"internet\"", resp, 1000);
+//    // esp_modem_at(dce, "AT+CNACT=0,1", resp, 1000);
+//     esp_modem_at(dce, "AT+CREG?", resp, 1000);
+//     esp_modem_at(dce, "AT+CGATT?", resp, 1000);
+//     esp_modem_at(dce, "AT+CGACT?", resp, 1000);
     return esp_modem_set_mode(dce, ESP_MODEM_MODE_DATA) == ESP_OK;
 }
 
