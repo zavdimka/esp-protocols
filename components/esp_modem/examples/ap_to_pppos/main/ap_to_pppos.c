@@ -161,6 +161,7 @@ void start_network(void)
             vTaskDelay(pdMS_TO_TICKS(5000));
             continue;
         }
+        //vTaskDelay(pdMS_TO_TICKS(15000));
         if (!modem_start_network()) {
             ESP_LOGE(TAG, "Modem could not enter network mode ...will retry after 10s");
             vTaskDelay(pdMS_TO_TICKS(10000));

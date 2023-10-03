@@ -64,7 +64,29 @@ void modem_deinit_network(void)
 bool modem_start_network()
 {
     char resp[100];
-    esp_modem_at(dce, "AT+COPS?", resp, 1000);
+    int act = 0;
+    esp_modem_get_module_name(dce, resp);
+    ESP_LOGI(TAG,"Module name %s", resp);
+    esp_modem_get_operator_name(dce, resp, &act);
+    ESP_LOGI(TAG,"Operator name %s act %i", resp, act);
+    esp_modem_get_network_attachment_state(dce, &act);
+    ESP_LOGI(TAG,"Network status %i", act);
+
+    vTaskDelay(pdMS_TO_TICKS(15000));
+
+    esp_modem_get_operator_name(dce, resp, &act);
+    ESP_LOGI(TAG,"Operator name %s act %i", resp, act);
+    esp_modem_get_network_attachment_state(dce, &act);
+    ESP_LOGI(TAG,"Network status %i", act);
+
+
+    esp_modem_at(dce, "AT+CFUN=0", resp, 1000);
+    esp_modem_at(dce, "AT+CGDCONT=1,\"IP\",\"internet\"", resp, 1000);
+    esp_modem_at(dce, "AT+CFUN=1", resp, 1000);
+    esp_modem_at(dce, "AT+CGATT?", resp, 1000);
+   // esp_modem_at(dce, "AT+CGNAPN", resp, 1000);
+   // esp_modem_at(dce, "AT+CNCFG=0,1,\"internet\"", resp, 1000);
+   // esp_modem_at(dce, "AT+CNACT=0,1", resp, 1000);
     esp_modem_at(dce, "AT+CREG?", resp, 1000);
     esp_modem_at(dce, "AT+CGATT?", resp, 1000);
     esp_modem_at(dce, "AT+CGACT?", resp, 1000);
