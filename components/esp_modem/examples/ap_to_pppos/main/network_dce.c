@@ -73,6 +73,8 @@ bool modem_start_network()
     ESP_LOGI(TAG,"Operator name %s act %i", resp, act);
     esp_modem_get_network_attachment_state(dce, &act);
     ESP_LOGI(TAG,"Network status %i", act);
+    esp_modem_set_network_attachment_state(dce, 1);
+    esp_modem_set_radio_state(dce, 1);
 
     vTaskDelay(pdMS_TO_TICKS(15000));
 
