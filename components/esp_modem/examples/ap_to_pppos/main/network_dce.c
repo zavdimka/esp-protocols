@@ -28,7 +28,7 @@ esp_err_t modem_init_network(esp_netif_t *netif)
     dte_config.uart_config.rx_io_num = 18;
     dte_config.uart_config.tx_io_num = 17;
 
-    dce = esp_modem_new_dev(ESP_MODEM_DCE_GENETIC, &dte_config, &dce_config, netif);
+    dce = esp_modem_new_dev(ESP_MODEM_DCE_SIM7070, &dte_config, &dce_config, netif);
     if (!dce) {
         return ESP_FAIL;
     }
